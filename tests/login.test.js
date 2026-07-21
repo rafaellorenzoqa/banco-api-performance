@@ -3,7 +3,11 @@ import { sleep, check } from 'k6'; //gives us the sleep command
 
 export const options = {
     //define the number of iterations for the test
-    iterations: 10,
+    iterations: 50,
+    thresholds: { //REAL performance tests!
+        http_req_duration: ['p(90)<10', 'max<1'], //response time of 90% of the users must be faster than 10 ms, max response time faster than 1ms
+        http_req_failed: ['rate<0.01'] //failed resquests must be less than 1%
+    }
 }
 
 export default function () {
